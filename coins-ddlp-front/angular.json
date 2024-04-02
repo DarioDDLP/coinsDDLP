@@ -94,6 +94,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "coins-ddlp-front:build:production",
+              "serveTarget": "coins-ddlp-front:serve:production"
+            },
+            "development": {
+              "buildTarget": "coins-ddlp-front:build:development",
+              "serveTarget": "coins-ddlp-front:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }

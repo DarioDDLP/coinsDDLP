@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "coinsddlp-back": {
+      "hosting": {
+        "coins-ddlp-front": [
+          "coinsddlp-back"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "coinsddlp-back"
+  }
+}

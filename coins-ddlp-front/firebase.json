@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "coins-ddlp-front",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}
