@@ -1,0 +1,35 @@
+<p-sidebar #sidebarRef [(visible)]="visible">
+  <ng-template pTemplate="headless">
+    <div class="header">
+      <div class="logo-container">
+        <img src="assets/logo-ddlp-dark.png" alt="logo" />
+      </div>
+
+      <div>
+        <p-button
+          type="button"
+          (click)="closeSidebar()"
+          icon="pi pi-times"
+          [rounded]="true"
+          [outlined]="true"
+        ></p-button>
+      </div>
+    </div>
+
+    <p class="title-sidebar">COLECCIONES DARÍO</p>
+
+    <p-menu [model]="items">
+      <ng-template pTemplate="item" let-item>
+        <div class="item-container">
+          <div class="item-img-container">
+            <img [src]="item.imgUrl" alt="" />
+            <i [class]="item.icon"></i>
+          </div>
+
+          <span>{{ item.label }}</span>
+        </div>
+      </ng-template>
+    </p-menu>
+  </ng-template>
+</p-sidebar>
+<p-button (click)="visible = true" icon="pi pi-arrow-right"></p-button>

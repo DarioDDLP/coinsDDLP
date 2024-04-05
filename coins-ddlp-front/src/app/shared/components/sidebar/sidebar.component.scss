@@ -1,0 +1,54 @@
+:host ::ng-deep {
+    .p-sidebar {
+        padding: 15px 20px;
+
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+
+
+            .logo-container {
+                width: 150px;
+
+
+                img {
+                    width: 100%;
+                }
+            }
+
+            .p-button.p-button-icon-only.p-button-rounded {
+                height: 2rem;
+                width: 2rem;
+            }
+        }
+
+        .p-menu {
+            padding-left: 1rem;
+
+            .title-sidebar {
+                font-size: 14px;
+                padding-left: 10px;
+            }
+
+            .item-container {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                height: 2.5rem;
+
+                .item-img-container {
+                    width: 28px;
+                    height: 28px;
+
+                    img {
+                        width: 100%;
+                    }
+
+                    .pi {}
+                }
+            }
+        }
+    }
+}
