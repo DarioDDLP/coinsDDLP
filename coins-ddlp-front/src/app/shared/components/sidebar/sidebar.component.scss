@@ -8,7 +8,6 @@
             justify-content: space-between;
             margin-bottom: 15px;
 
-
             .logo-container {
                 width: 150px;
 
@@ -23,13 +22,18 @@
             }
         }
 
+        .title-sidebar {
+            font-size: 14px;
+            padding-left: 15px;
+            margin-bottom: 0;
+        }
+
         .p-menu {
             width: 100%;
             border: none;
 
-            .title-sidebar {
-                font-size: 14px;
-                padding-left: 10px;
+            ul {
+                padding: 0 0 0 0.75rem;
             }
 
             .p-menuitem-link-active {

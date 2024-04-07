@@ -1,4 +1,4 @@
-export const sidebarConfig = [
+export const coleccionesDario = [
     {
         label: 'Euro',
         routerLink: 'euros',
@@ -15,12 +15,12 @@ export const sidebarConfig = [
         imgUrl: 'assets/flags/spain-flag.png',
     },
     {
-        label: 'ubicacion',
+        label: 'Ubicación',
         routerLink: 'ubicacion',
         imgUrl: 'assets/book.png',
     },
     {
-        label: 'estadisticas',
+        label: 'Estadísticas',
         routerLink: 'estadisticas',
         imgUrl: 'assets/statistics.png',
     },

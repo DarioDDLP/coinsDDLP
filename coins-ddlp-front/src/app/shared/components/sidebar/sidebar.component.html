@@ -4,7 +4,6 @@
       <div class="logo-container">
         <img src="assets/logo-ddlp-dark.png" alt="logo" />
       </div>
-
       <div>
         <p-button
           type="button"
@@ -15,29 +14,25 @@
         ></p-button>
       </div>
     </div>
-
     <p class="title-sidebar">COLECCIONES DARÍO</p>
-
     <p-menu [model]="items">
       <ng-template pTemplate="item" let-item>
-
-
-        <a [routerLink]="item.routerLink" class="p-menuitem-link" routerLinkActive="p-menuitem-link-active" >
-          <div class="item-container" >
+        <a
+          [routerLink]="item.routerLink"
+          class="p-menuitem-link"
+          routerLinkActive="p-menuitem-link-active"
+        >
+          <div class="item-container">
             <div class="item-img-container">
               <img [src]="item.imgUrl" alt="" />
               <i [class]="item.icon"></i>
             </div>
-              <span>{{ item.label }}</span>
+            <span>{{ item.label }}</span>
           </div>
         </a>
-
-
-
-
-
       </ng-template>
     </p-menu>
+    <p class="title-sidebar">ADMINISTRACIÓN</p>
   </ng-template>
 </p-sidebar>
 <p-button (click)="visible = true" icon="pi pi-arrow-right"></p-button>
