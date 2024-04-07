@@ -20,14 +20,22 @@
 
     <p-menu [model]="items">
       <ng-template pTemplate="item" let-item>
-        <div class="item-container">
-          <div class="item-img-container">
-            <img [src]="item.imgUrl" alt="" />
-            <i [class]="item.icon"></i>
-          </div>
 
-          <span>{{ item.label }}</span>
-        </div>
+
+        <a [routerLink]="item.routerLink" class="p-menuitem-link" routerLinkActive="p-menuitem-link-active" >
+          <div class="item-container" >
+            <div class="item-img-container">
+              <img [src]="item.imgUrl" alt="" />
+              <i [class]="item.icon"></i>
+            </div>
+              <span>{{ item.label }}</span>
+          </div>
+        </a>
+
+
+
+
+
       </ng-template>
     </p-menu>
   </ng-template>

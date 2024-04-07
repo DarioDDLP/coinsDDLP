@@ -1,22 +1,27 @@
 export const sidebarConfig = [
     {
         label: 'Euro',
-        routerLink: '/Euro',
-        imgUrl: 'assets/flags/european-flag.png'
-    },
-    {
-        label: 'Peseta',
-        routerLink: '/Peseta',
-        imgUrl: 'assets/flags/spain-flag.png',
+        routerLink: 'euros',
+        imgUrl: 'assets/flags/european-flag.png',
     },
     {
         label: 'Conmemorativas',
-        routerLink: '/Conmemorativas',
+        routerLink: 'conmemorativas',
         imgUrl: 'assets/2-euros.png',
     },
     {
-        label: 'Ubicación',
-        routerLink: '/Ubicacion',
-        icon: 'pi pi-table',
-    }
+        label: 'Peseta',
+        routerLink: 'pesetas',
+        imgUrl: 'assets/flags/spain-flag.png',
+    },
+    {
+        label: 'ubicacion',
+        routerLink: 'ubicacion',
+        imgUrl: 'assets/book.png',
+    },
+    {
+        label: 'estadisticas',
+        routerLink: 'estadisticas',
+        imgUrl: 'assets/statistics.png',
+    },
 ];
