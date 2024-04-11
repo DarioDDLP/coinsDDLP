@@ -1,12 +1,18 @@
-.home-body {
-    background-image: url('../../assets/background.jpg');
-    background-size: cover;
-    background-position: center;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    padding: 2rem 4rem;
+.general-content {
+    width: 100%;
+
+    .home-body {
+        background-image: url('../../assets/background.jpg');
+        background-size: cover;
+        background-position: center;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        padding: 2rem 4rem;
+    }
+
+
 }

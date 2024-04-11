@@ -1,0 +1,53 @@
+:host ::ng-deep {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .card-table {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        width: 60%;
+
+        @media screen and (width <=1300px) {
+            width: 90%;
+        }
+
+        @media screen and (width <=576px) {
+            width: 98%;
+        }
+
+        .p-datatable.p-datatable-sm .p-datatable-tbody>tr>td,
+        .p-datatable.p-datatable-sm .p-datatable-thead>tr>th {
+            padding: 0.2rem;
+        }
+
+        .truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+
+            @media screen and (width <=700px) {
+                max-width: 100px;
+            }
+
+            @media screen and (width <=576px) {
+                max-width: 50px;
+            }
+        }
+
+        .truncate-responsive {
+            @media screen and (width <=576px) {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 50px;
+            }
+        }
+
+        .center {
+            text-align: center;
+        }
+    }
+}
