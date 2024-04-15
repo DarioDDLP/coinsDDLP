@@ -12,7 +12,7 @@ export const coleccionesDario = [
     {
         label: 'Peseta',
         routerLink: 'pesetas',
-        imgUrl: 'assets/flags/spain-flag.png',
+        imgUrl: 'assets/flags/espana-flag.png',
     },
     {
         label: 'Ubicación',

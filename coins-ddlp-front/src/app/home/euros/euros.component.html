@@ -1,8 +1,10 @@
 <div class="card-table">
-  <div class="card-table-header"></div>
+  <div class="card-table-header">
+    <p-button (click)="addInfo()">Add info</p-button>
+  </div>
 
   <p-table
-    [value]="products"
+    [value]="euros"
     styleClass="p-datatable-sm p-datatable-striped"
     [scrollable]="true"
     scrollHeight="85vh"
@@ -17,19 +19,19 @@
         <th class="center">Uds.</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-product>
+    <ng-template pTemplate="body" let-euros>
       <tr>
         <td>
-          <img src="../../../assets/flags/spain-flag.png" alt="" width="32" />
+          <img [src]="getNametoFlags(euros.country)" alt="" width="32" />
         </td>
-        <td>{{ product.year }}</td>
-        <td>{{ product.valor_facial }}</td>
-        <td class="truncate-responsive">{{ product.ceca }}</td>
-        <td class="truncate">{{ product.descripcion }}</td>
+        <td>{{ euros.year }}</td>
+        <td>{{ euros.faceValue }}</td>
+        <td class="truncate-responsive">{{ euros.ceca }}</td>
+        <td class="truncate">{{ euros.description }}</td>
         <td class="center">
           <p-badge
-            [value]="product.uds"
-            [severity]="product.uds <= 0 ? 'danger' : 'success'"
+            [value]="euros.uds"
+            [severity]="euros.uds <= 0 ? 'danger' : 'success'"
           ></p-badge>
         </td>
       </tr>

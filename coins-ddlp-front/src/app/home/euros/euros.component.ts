@@ -1,147 +1,152 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+
+// Components PrimeNG
 import { TableModule } from 'primeng/table';
 import { BadgeModule } from 'primeng/badge';
+import { ButtonModule } from 'primeng/button';
+
+import { FirebaseService } from '../../services/firebase.service';
 @Component({
   selector: 'app-euros',
   standalone: true,
-  imports: [CommonModule, TableModule, BadgeModule],
+  imports: [CommonModule, TableModule, BadgeModule, ButtonModule],
   templateUrl: './euros.component.html',
   styleUrl: './euros.component.scss'
 })
 export default class EurosComponent {
 
-  products: any = [
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '1 céntimo',
-      ceca: 'A Hamburgo',
-      descripcion: 'Catedral de Santiago de Compostela',
-      uds: 0,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '2 centimos',
-      ceca: 'A Hamburgo',
-      descripcion: 'Catedral de Santiago de Compostela',
-      uds: 0,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '5 céntimos',
-      descripcion: 'Catedral de Santiago de Compostela',
-      uds: 0,
-    },
-    {
-      package: 'España',
-      year: '1999',
-      valor_facial: '10 Céntimos',
-      descripcion: 'Cervantes',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '20 Céntimos',
-      descripcion: 'Cervantes',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '50 Céntimos',
-      descripcion: 'Cervantes',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '1 Euro',
-      descripcion: 'Rey Juan Carlos I',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '2 Euros',
-      descripcion: 'Rey Juan Carlos I',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '2 Euros C',
-      descripcion: 'Rey Juan Carlos I de España',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '1 céntimo',
-      ceca: 'A Hamburgo',
-      descripcion: 'Catedral de Santiago de Compostela',
-      uds: 0,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '2 centimos',
-      ceca: 'A Hamburgo',
-      descripcion: 'Catedral de Santiago de Compostela',
-      uds: 0,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '5 céntimos',
-      descripcion: 'Catedral de Santiago de Compostela Catedral de Santiago de Compostela',
-      uds: 0,
-    },
-    {
-      package: 'España',
-      year: '1999',
-      valor_facial: '10 Céntimos',
-      descripcion: 'Cervantes',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '20 Céntimos',
-      descripcion: 'Cervantes',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '50 Céntimos',
-      descripcion: 'Cervantes',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '1 Euro',
-      descripcion: 'Rey Juan Carlos I',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '2 Euros',
-      descripcion: 'Rey Juan Carlos I',
-      uds: 1,
-    },
-    {
-      pais: 'España',
-      year: '1999',
-      valor_facial: '2 Euros C',
-      descripcion: 'Rey Juan Carlos I de España',
-      uds: 1,
+  euros: any[] = [];
+
+  constructor(private _firebaseService: FirebaseService) { }
+
+  ngOnInit() {
+
+    this._firebaseService.getAll().subscribe(coins => {
+      console.log(coins);
+      this.euros = coins;
+    })
+  }
+
+
+  async addInfo() {
+    console.log('añadido');
+
+    const info = [
+      {
+        "country": "España",
+        "year": "1999",
+        "faceValue": "1 Céntimo",
+        "mint": "",
+        "conservation": "EBC",
+        "description": "Rey Alberto II",
+        "uds": "1",
+        "idNum": "73",
+        "observations": ""
+      },
+      {
+        "country": "Bélgica",
+        "year": "2000",
+        "faceValue": "2 Céntimos",
+        "mint": "",
+        "conservation": "",
+        "description": "Rey Alberto II",
+        "uds": "0",
+        "idNum": "78",
+        "observations": ""
+      },
+      {
+        "country": "España",
+        "year": "1999",
+        "faceValue": "5 Céntimos",
+        "mint": "",
+        "conservation": "EBC",
+        "description": "Rey Alberto II",
+        "uds": "1",
+        "idNum": "74",
+        "observations": ""
+      },
+      {
+        "country": "Bélgica",
+        "year": "1999",
+        "faceValue": "10 Céntimos",
+        "mint": "",
+        "conservation": "EBC",
+        "description": "Rey Alberto II",
+        "uds": "1",
+        "idNum": "75",
+        "observations": ""
+      },
+      {
+        "country": "Bélgica",
+        "year": "1999",
+        "faceValue": "20 Céntimos",
+        "mint": "",
+        "conservation": "",
+        "description": "Rey Alberto II",
+        "uds": "0",
+        "idNum": "79",
+        "observations": ""
+      },
+      {
+        "country": "Bélgica",
+        "year": "1999",
+        "faceValue": "50 Céntimos",
+        "mint": "",
+        "conservation": "EBC",
+        "description": "Rey Alberto II",
+        "uds": "1",
+        "idNum": "76",
+        "observations": ""
+      },
+      {
+        "country": "Bélgica",
+        "year": "1999",
+        "faceValue": "1 Euro",
+        "mint": "",
+        "conservation": "EBC",
+        "description": "Rey Alberto II",
+        "uds": "1",
+        "idNum": "77",
+        "observations": ""
+      },
+      {
+        "country": "Bélgica",
+        "year": "1999",
+        "faceValue": "2 Euros",
+        "mint": "",
+        "conservation": "",
+        "description": "Rey Alberto II",
+        "uds": "0",
+        "idNum": "80",
+        "observations": ""
+      }
+    ]
+
+    try {
+      for (const coin of info) {
+        await this._firebaseService.addInfo(coin);
+        console.log('moneda añadida:', coin);
+      }
+
+    } catch (error) {
+      console.error('Error al agregar monedas:', error);
     }
-  ]
+  }
+
+  getNametoFlags(name: string): string {
+    const formattedName = name.toLowerCase().trim().replace(/[áéíóúàèìòùäëïöüâêîôûñ]/g, match => {
+      const accents: { [key: string]: string } = {
+        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+        'à': 'a', 'è': 'e', 'ì': 'i', 'ò': 'o', 'ù': 'u',
+        'ä': 'a', 'ë': 'e', 'ï': 'i', 'ö': 'o', 'ü': 'u',
+        'â': 'a', 'ê': 'e', 'î': 'i', 'ô': 'o', 'û': 'u',
+        'ñ': 'n'
+      };
+      return accents[match] || match;
+    });
+    return 'assets/flags/' + formattedName + '-flag.png'
+  }
+
 
 }
