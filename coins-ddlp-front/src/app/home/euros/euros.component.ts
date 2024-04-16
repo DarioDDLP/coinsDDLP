@@ -7,6 +7,8 @@ import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 
 import { FirebaseService } from '../../services/firebase.service';
+import { EuroCoin } from '../../interfaces/euroCoin.interface';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-euros',
   standalone: true,
@@ -16,22 +18,21 @@ import { FirebaseService } from '../../services/firebase.service';
 })
 export default class EurosComponent {
 
-  euros: any[] = [];
+  euros: EuroCoin[] = [];
 
-  constructor(private _firebaseService: FirebaseService) { }
+  constructor(
+    private _firebaseService: FirebaseService,
+    private _router: Router
+  ) { }
 
   ngOnInit() {
-
     this._firebaseService.getAll().subscribe(coins => {
       console.log(coins);
       this.euros = coins;
     })
   }
 
-
   async addInfo() {
-    console.log('añadido');
-
     const info = [
       {
         "country": "España",
@@ -70,7 +71,7 @@ export default class EurosComponent {
         "country": "Bélgica",
         "year": "1999",
         "faceValue": "10 Céntimos",
-        "mint": "",
+        "mint": "A Berlin",
         "conservation": "EBC",
         "description": "Rey Alberto II",
         "uds": "1",
@@ -81,7 +82,7 @@ export default class EurosComponent {
         "country": "Bélgica",
         "year": "1999",
         "faceValue": "20 Céntimos",
-        "mint": "",
+        "mint": "D Hamburgo",
         "conservation": "",
         "description": "Rey Alberto II",
         "uds": "0",
@@ -92,7 +93,7 @@ export default class EurosComponent {
         "country": "Bélgica",
         "year": "1999",
         "faceValue": "50 Céntimos",
-        "mint": "",
+        "mint": "A Berlin",
         "conservation": "EBC",
         "description": "Rey Alberto II",
         "uds": "1",
@@ -103,7 +104,7 @@ export default class EurosComponent {
         "country": "Bélgica",
         "year": "1999",
         "faceValue": "1 Euro",
-        "mint": "",
+        "mint": "J japon",
         "conservation": "EBC",
         "description": "Rey Alberto II",
         "uds": "1",
@@ -114,7 +115,7 @@ export default class EurosComponent {
         "country": "Bélgica",
         "year": "1999",
         "faceValue": "2 Euros",
-        "mint": "",
+        "mint": "F francia",
         "conservation": "",
         "description": "Rey Alberto II",
         "uds": "0",
@@ -147,6 +148,18 @@ export default class EurosComponent {
     });
     return 'assets/flags/' + formattedName + '-flag.png'
   }
+
+  deleteAll() {
+    this._firebaseService.pruebaDeletemuchas()
+  }
+
+  goToCoinDetails(idNum: string) {
+    this._router.navigate(['/home/euros/' + idNum]);
+    console.log(idNum);
+  }
+
+
+
 
 
 }

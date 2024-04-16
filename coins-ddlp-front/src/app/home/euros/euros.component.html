@@ -1,13 +1,14 @@
 <div class="card-table">
   <div class="card-table-header">
     <p-button (click)="addInfo()">Add info</p-button>
+    <p-button (click)="deleteAll()">delete</p-button>
   </div>
 
   <p-table
     [value]="euros"
     styleClass="p-datatable-sm p-datatable-striped"
     [scrollable]="true"
-    scrollHeight="85vh"
+    scrollHeight="80vh"
   >
     <ng-template pTemplate="header">
       <tr>
@@ -20,13 +21,13 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-euros>
-      <tr>
+      <tr (click)="goToCoinDetails(euros.idNum)">
         <td>
-          <img [src]="getNametoFlags(euros.country)" alt="" width="32" />
+          <img [src]="getNametoFlags(euros.country)" alt="flag" width="32" />
         </td>
         <td>{{ euros.year }}</td>
         <td>{{ euros.faceValue }}</td>
-        <td class="truncate-responsive">{{ euros.ceca }}</td>
+        <td class="truncate-responsive">{{ euros.mint }}</td>
         <td class="truncate">{{ euros.description }}</td>
         <td class="center">
           <p-badge
