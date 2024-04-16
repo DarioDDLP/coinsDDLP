@@ -11,6 +11,10 @@ export const routes: Routes = [
                 title: 'euros', loadComponent: () => import('./home/euros/euros.component')
             },
             {
+                path: 'euros/:id',
+                title: 'euros details', loadComponent: () => import('./home/euros/euros-detail/euros-detail.component')
+            },
+            {
                 path: 'conmemorativas',
                 title: 'conmemorativas', loadComponent: () => import('./home/conmemorativas/conmemorativas.component')
             },
