@@ -1,9 +1,183 @@
 <div class="card-details">
   <div class="header-container">
-    <div class="img-container">
-      <img src="../../../../assets/flags/belgica-flag.png" alt="" />
+    <div class="flag-container">
+      <img [src]="getNametoFlags(dataCoin.issuer.name)" alt="flag" />
     </div>
 
-    <h1>name</h1>
+    <div class="title-container">
+      <h1>{{ dataCoin.title.split("(")[0] }}</h1>
+      <span>{{ dataCoin.title.split("(")[1].slice(0, -1) }}</span>
+    </div>
+  </div>
+
+  <div class="body-container">
+    <div class="left-container">
+      <div class="img-coin-container">
+        <div class="img-coin-box">
+          <img [src]="dataCoin.obverse.thumbnail" alt="obverse" />
+        </div>
+        <div class="img-coin-box">
+          <img [src]="dataCoin.reverse.thumbnail" alt="reverse" />
+        </div>
+      </div>
+
+      <div class="img-coin-container">
+        <div class="img-coin-box-edge">
+          <img [src]="dataCoin.edge.thumbnail" alt="edge" />
+        </div>
+      </div>
+
+      <div class="obverse-description">
+        <span class="span-description">Anverso</span>
+        <p class="p-description">{{ dataCoin.obverse.description }}</p>
+      </div>
+
+      <div class="reverse-description">
+        <span class="span-description">Reverso</span>
+        <p class="p-description">{{ dataCoin.reverse.description }}</p>
+      </div>
+
+      <a [href]="dataCoin.url">Más información</a>
+    </div>
+
+    <div class="right-container">
+      <div class="features-container">
+        <div class="features-title">
+          <p>Características</p>
+        </div>
+
+        <div class="features-list">
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Emisor:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.issuer.name}}</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Rey:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.ruler[0].name}}</span>
+            </div>
+          </div>
+
+          
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Tipo:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.type}}</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Años:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.min_year}}-{{dataCoin.max_year}}</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Valor:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.value.text}} {{dataCoin.value.numeric_value | euroValue}}
+              </span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Unidad monetaria:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.value.currency.full_name}}
+              </span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Composición:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.composition.text}}
+              </span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Peso:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.weight}} g</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Diámetro:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.size}} mm</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Grosor:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.thickness}} mm</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Forma:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.shape}}</span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Técnica:</span>
+            </div>
+            <div class="feature-value">
+              <span>
+                {{ dataCoin.technique.text.split('>')[1].split('<')[0] }}
+              </span>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-label">
+              <span>Referencias:</span>
+            </div>
+            <div class="feature-value">
+              <span>{{dataCoin.references[0].catalogue.code}} {{dataCoin.references[0].number}}</span>
+            </div>
+          </div>
+
+
+                    
+          
+        </div>
+
+
+      </div>
+    </div>
   </div>
 </div>

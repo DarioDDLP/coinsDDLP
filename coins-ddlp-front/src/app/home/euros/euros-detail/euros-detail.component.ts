@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NumistaService } from '../../../services/numista.service';
+import { getNametoFlags } from '../../../shared/helpers/normalize-names';
+import { EuroValuePipe } from "../../../shared/pipes/euro-value.pipe";
 
 @Component({
   selector: 'app-euros-detail',
   standalone: true,
-  imports: [],
   templateUrl: './euros-detail.component.html',
-  styleUrl: './euros-detail.component.scss'
+  styleUrl: './euros-detail.component.scss',
+  imports: [EuroValuePipe]
 })
 export default class EurosDetailComponent {
   idNum: string = '';
+  getNametoFlags = getNametoFlags;
 
   dataCoin = {
     "id": 75,

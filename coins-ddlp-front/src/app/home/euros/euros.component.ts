@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { FirebaseService } from '../../services/firebase.service';
 import { EuroCoin } from '../../interfaces/euroCoin.interface';
 import { Router } from '@angular/router';
+import { getNametoFlags } from '../../shared/helpers/normalize-names';
 @Component({
   selector: 'app-euros',
   standalone: true,
@@ -19,6 +20,7 @@ import { Router } from '@angular/router';
 export default class EurosComponent {
 
   euros: EuroCoin[] = [];
+  getNametoFlags = getNametoFlags;
 
   constructor(
     private _firebaseService: FirebaseService,
@@ -133,20 +135,6 @@ export default class EurosComponent {
     } catch (error) {
       console.error('Error al agregar monedas:', error);
     }
-  }
-
-  getNametoFlags(name: string): string {
-    const formattedName = name.toLowerCase().trim().replace(/[áéíóúàèìòùäëïöüâêîôûñ]/g, match => {
-      const accents: { [key: string]: string } = {
-        'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
-        'à': 'a', 'è': 'e', 'ì': 'i', 'ò': 'o', 'ù': 'u',
-        'ä': 'a', 'ë': 'e', 'ï': 'i', 'ö': 'o', 'ü': 'u',
-        'â': 'a', 'ê': 'e', 'î': 'i', 'ô': 'o', 'û': 'u',
-        'ñ': 'n'
-      };
-      return accents[match] || match;
-    });
-    return 'assets/flags/' + formattedName + '-flag.png'
   }
 
   deleteAll() {
