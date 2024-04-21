@@ -3,17 +3,20 @@ import { ActivatedRoute } from '@angular/router';
 import { NumistaService } from '../../../services/numista.service';
 import { getNametoFlags } from '../../../shared/helpers/normalize-names';
 import { EuroValuePipe } from "../../../shared/pipes/euro-value.pipe";
+import { FirebaseService } from '../../../services/firebase.service';
+import { EuroCoin } from '../../../interfaces/euroCoin.interface';
+import { BadgeModule } from 'primeng/badge';
 
 @Component({
   selector: 'app-euros-detail',
   standalone: true,
   templateUrl: './euros-detail.component.html',
   styleUrl: './euros-detail.component.scss',
-  imports: [EuroValuePipe]
+  imports: [EuroValuePipe, BadgeModule]
 })
 export default class EurosDetailComponent {
-  idNum: string = '';
   getNametoFlags = getNametoFlags;
+  coin: EuroCoin | null = null;
 
   dataCoin = {
     "id": 75,
@@ -144,14 +147,25 @@ export default class EurosDetailComponent {
 
   constructor(
     private _route: ActivatedRoute,
-    private _numistaServices: NumistaService
+    private _firebaseService: FirebaseService,
+    private _numistaServices: NumistaService,
   ) { }
 
-  ngOnInit() {
-    this.idNum = this._route.snapshot.paramMap.get('id')!;
+  async ngOnInit() {
+    await this.getCoinById(this._route.snapshot.paramMap.get('id')!)
+    console.log(this.coin);
 
     // this._numistaServices.getCoinByIdNum(this.idNum).subscribe(coin => {
     //   console.log(coin);
     // })
+  }
+
+  async getCoinById(id: string) {
+    try {
+      this.coin = await this._firebaseService.getCoinById(id)
+    } catch (error) {
+      console.error(error);
+    }
+
   }
 }

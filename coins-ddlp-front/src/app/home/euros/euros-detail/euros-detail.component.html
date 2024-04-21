@@ -8,7 +8,15 @@
       <h1>{{ dataCoin.title.split("(")[0] }}</h1>
       <span>{{ dataCoin.title.split("(")[1].slice(0, -1) }}</span>
     </div>
+    
+    <div class="header-info-container">
+      <h2>{{coin?.year}}</h2>
+      <p-badge 
+      [value]="coin?.uds" 
+      [severity]="coin && +coin.uds! <= 0 ? 'danger' : 'success'">
+    </p-badge>
   </div>
+</div>
 
   <div class="body-container">
     <div class="left-container">

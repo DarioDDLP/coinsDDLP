@@ -29,12 +29,42 @@
                     border-radius: 50%;
                 }
             }
-        }
 
-        .title-container {
-            display: flex;
-            align-items: baseline;
-            gap: 1rem;
+            .title-container {
+                display: flex;
+                align-items: baseline;
+                gap: 1rem;
+            }
+
+            .header-info-container {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+                margin-left: auto;
+
+                .p-badge.p-badge-success {
+                    width: 36px;
+                    height: 36px;
+                    background-color: #22c55e;
+                    color: #ffffff;
+                    font-size: 21px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .p-badge.p-badge-danger {
+                    width: 36px;
+                    height: 36px;
+                    background-color: #ef4444;
+                    color: #ffffff;
+                    font-size: 21px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+            }
         }
 
         .body-container {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collectionData, deleteDoc, getDocs, orderBy, query } from '@angular/fire/firestore';
+import { DocumentData, DocumentSnapshot, Firestore, collectionData, deleteDoc, doc, getDoc, getDocs, orderBy, query } from '@angular/fire/firestore';
 import { addDoc, collection } from 'firebase/firestore';
 import { Observable, map } from 'rxjs';
 import { EuroCoin } from '../interfaces/euroCoin.interface';
@@ -14,7 +14,6 @@ export class FirebaseService {
   constructor(private _Firestore: Firestore) {
   }
 
-  //TODO: Pendiente tipar
   getAll(): Observable<EuroCoin[]> {
     const customOrder: { [denomination: string]: number } = {
       '1 Céntimo': 1,
@@ -56,9 +55,14 @@ export class FirebaseService {
     );
   }
 
-  //TODO: Pendiente tipar
   addInfo(coin: any): Promise<any> {
     return addDoc(this.euros, coin)
+  }
+
+  async getCoinById(id: string): Promise<any> {
+    const ref = doc(this._Firestore, 'euro/' + id);
+    const docSnap = await getDoc(ref);
+    if (docSnap.exists()) return docSnap.data();
   }
 
   async pruebaDeletemuchas() {

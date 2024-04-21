@@ -21,7 +21,7 @@
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-euros>
-      <tr (click)="goToCoinDetails(euros.idNum)">
+      <tr (click)="goToCoinDetails(euros.id)">
         <td>
           <img [src]="getNametoFlags(euros.country)" alt="flag" width="32" />
         </td>

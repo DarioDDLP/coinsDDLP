@@ -141,9 +141,9 @@ export default class EurosComponent {
     this._firebaseService.pruebaDeletemuchas()
   }
 
-  goToCoinDetails(idNum: string) {
-    this._router.navigate(['/home/euros/' + idNum]);
-    console.log(idNum);
+  goToCoinDetails(id: string) {
+    this._router.navigate(['/home/euros/' + id]);
+    console.log(id);
   }
 
 
