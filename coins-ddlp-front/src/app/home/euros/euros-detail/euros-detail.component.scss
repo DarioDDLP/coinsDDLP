@@ -1,5 +1,4 @@
 :host ::ng-deep {
-    margin: 100px;
     display: flex;
     justify-content: center;
 
@@ -72,6 +71,7 @@
 
             .left-container {
                 width: 50%;
+                padding-right: 0.5rem;
 
                 .img-coin-container {
                     display: flex;
@@ -132,6 +132,7 @@
 
                 .features-list {
                     padding: 0 1rem 1rem 1rem;
+                    margin-bottom: 1rem;
 
                     .feature-box {
                         display: flex;
@@ -143,7 +144,24 @@
                         }
                     }
                 }
+
+                .span-observations,
+                .observations {
+                    font-style: italic;
+                    font-size: 14px;
+                }
             }
+        }
+
+        .footer-container {
+            width: 100%;
+
+            .buttons-container {
+                margin-top: 1rem;
+                display: flex;
+                justify-content: space-around;
+            }
+
         }
 
     }

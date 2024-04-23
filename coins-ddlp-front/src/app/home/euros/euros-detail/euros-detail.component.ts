@@ -6,13 +6,15 @@ import { EuroValuePipe } from "../../../shared/pipes/euro-value.pipe";
 import { FirebaseService } from '../../../services/firebase.service';
 import { EuroCoin } from '../../../interfaces/euroCoin.interface';
 import { BadgeModule } from 'primeng/badge';
-
+import { TagModule } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-euros-detail',
   standalone: true,
   templateUrl: './euros-detail.component.html',
   styleUrl: './euros-detail.component.scss',
-  imports: [EuroValuePipe, BadgeModule]
+  imports: [EuroValuePipe, BadgeModule, TagModule, ButtonModule]
 })
 export default class EurosDetailComponent {
   getNametoFlags = getNametoFlags;
@@ -149,6 +151,7 @@ export default class EurosDetailComponent {
     private _route: ActivatedRoute,
     private _firebaseService: FirebaseService,
     private _numistaServices: NumistaService,
+    private _location: Location
   ) { }
 
   async ngOnInit() {
@@ -160,12 +163,32 @@ export default class EurosDetailComponent {
     // })
   }
 
+  getConservationColors(conservation: string): string {
+    switch (conservation) {
+      case 'SC':
+        return 'success';
+      case 'MBC':
+      case 'EBC':
+        return 'info';
+      case 'BC':
+      case 'RC':
+        return 'warning';
+      case 'MC':
+        return 'danger';
+      default:
+        return '-';
+    }
+  }
+
   async getCoinById(id: string) {
     try {
       this.coin = await this._firebaseService.getCoinById(id)
     } catch (error) {
       console.error(error);
     }
+  }
 
+  goBack() {
+    this._location.back();
   }
 }

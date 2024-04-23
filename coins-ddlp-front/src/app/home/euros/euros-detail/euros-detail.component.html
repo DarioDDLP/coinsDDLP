@@ -8,8 +8,12 @@
       <h1>{{ dataCoin.title.split("(")[0] }}</h1>
       <span>{{ dataCoin.title.split("(")[1].slice(0, -1) }}</span>
     </div>
-    
+
     <div class="header-info-container">
+    <div>
+      <p-tag [value]="coin?.conservation ? coin?.conservation : 'ND' " [severity]="getConservationColors(coin?.conservation ?? '-')"></p-tag>
+    </div>
+    
       <h2>{{coin?.year}}</h2>
       <p-badge 
       [value]="coin?.uds" 
@@ -178,14 +182,32 @@
               <span>{{dataCoin.references[0].catalogue.code}} {{dataCoin.references[0].number}}</span>
             </div>
           </div>
-
-
-                    
-          
         </div>
-
-
       </div>
+
+      <span class="span-observations">Observaciones:</span>
+      <p class="observations">{{coin?.observations}}</p>
+    
+    </div>
+  </div>
+
+  <div class="footer-container">
+    <div class="buttons-container">
+
+      <p-button
+        [raised]="true"
+        label="Volver" 
+        icon="pi pi-arrow-left"
+        (click)="goBack()">
+      </p-button>
+     
+      <p-button 
+        [raised]="true"
+        label="Editar" 
+        icon="pi pi-pen-to-square"
+        severity="warning">
+      </p-button>
+
     </div>
   </div>
 </div>
