@@ -3,3 +3,13 @@
 body {
     margin: 0;
 }
+
+@layer reset, primeng;
+
+@layer reset {
+    button {
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}
