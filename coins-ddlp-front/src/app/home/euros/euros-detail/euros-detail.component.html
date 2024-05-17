@@ -10,17 +10,21 @@
     </div>
 
     <div class="header-info-container">
-    <div>
-      <p-tag [value]="coin?.conservation ? coin?.conservation : 'ND' " [severity]="getConservationColors(coin?.conservation ?? '-')"></p-tag>
+      <div>
+        <p-tag
+          [value]="coin?.conservation ? coin?.conservation : 'ND'"
+          [severity]="getConservationColors(coin?.conservation ?? '-')"
+        ></p-tag>
+      </div>
+
+      <h2>{{ coin?.year }}</h2>
+      <p-badge
+        [value]="coin?.uds"
+        [severity]="coin && +coin.uds! <= 0 ? 'danger' : 'success'"
+      >
+      </p-badge>
     </div>
-    
-      <h2>{{coin?.year}}</h2>
-      <p-badge 
-      [value]="coin?.uds" 
-      [severity]="coin && +coin.uds! <= 0 ? 'danger' : 'success'">
-    </p-badge>
   </div>
-</div>
 
   <div class="body-container">
     <div class="left-container">
@@ -59,13 +63,12 @@
         </div>
 
         <div class="features-list">
-
           <div class="feature-box">
             <div class="feature-label">
               <span>Emisor:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.issuer.name}}</span>
+              <span>{{ dataCoin.issuer.name }}</span>
             </div>
           </div>
 
@@ -74,17 +77,16 @@
               <span>Rey:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.ruler[0].name}}</span>
+              <span>{{ dataCoin.ruler[0].name }}</span>
             </div>
           </div>
 
-          
           <div class="feature-box">
             <div class="feature-label">
               <span>Tipo:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.type}}</span>
+              <span>{{ dataCoin.type }}</span>
             </div>
           </div>
 
@@ -93,7 +95,7 @@
               <span>Años:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.min_year}}-{{dataCoin.max_year}}</span>
+              <span>{{ dataCoin.min_year }}-{{ dataCoin.max_year }}</span>
             </div>
           </div>
 
@@ -102,7 +104,9 @@
               <span>Valor:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.value.text}} {{dataCoin.value.numeric_value | euroValue}}
+              <span
+                >{{ dataCoin.value.text }}
+                {{ dataCoin.value.numeric_value | euroValue }}
               </span>
             </div>
           </div>
@@ -112,8 +116,7 @@
               <span>Unidad monetaria:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.value.currency.full_name}}
-              </span>
+              <span>{{ dataCoin.value.currency.full_name }} </span>
             </div>
           </div>
 
@@ -122,8 +125,7 @@
               <span>Composición:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.composition.text}}
-              </span>
+              <span>{{ dataCoin.composition.text }} </span>
             </div>
           </div>
 
@@ -132,7 +134,7 @@
               <span>Peso:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.weight}} g</span>
+              <span>{{ dataCoin.weight }} g</span>
             </div>
           </div>
 
@@ -141,7 +143,7 @@
               <span>Diámetro:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.size}} mm</span>
+              <span>{{ dataCoin.size }} mm</span>
             </div>
           </div>
 
@@ -150,7 +152,7 @@
               <span>Grosor:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.thickness}} mm</span>
+              <span>{{ dataCoin.thickness }} mm</span>
             </div>
           </div>
 
@@ -159,7 +161,7 @@
               <span>Forma:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.shape}}</span>
+              <span>{{ dataCoin.shape }}</span>
             </div>
           </div>
 
@@ -169,7 +171,7 @@
             </div>
             <div class="feature-value">
               <span>
-                {{ dataCoin.technique.text.split('>')[1].split('<')[0] }}
+                {{ dataCoin.technique.text.split(">")[1].split("<")[0] }}
               </span>
             </div>
           </div>
@@ -179,35 +181,113 @@
               <span>Referencias:</span>
             </div>
             <div class="feature-value">
-              <span>{{dataCoin.references[0].catalogue.code}} {{dataCoin.references[0].number}}</span>
+              <span
+                >{{ dataCoin.references[0].catalogue.code }}
+                {{ dataCoin.references[0].number }}</span
+              >
             </div>
           </div>
         </div>
       </div>
 
       <span class="span-observations">Observaciones:</span>
-      <p class="observations">{{coin?.observations}}</p>
-    
+      <p class="observations">{{ coin?.observations }}</p>
     </div>
   </div>
 
   <div class="footer-container">
     <div class="buttons-container">
+      <p-button
+        [raised]="true"
+        label="Volver"
+        icon="pi pi-arrow-left"
+        (click)="goBack()"
+      >
+      </p-button>
 
       <p-button
         [raised]="true"
-        label="Volver" 
-        icon="pi pi-arrow-left"
-        (click)="goBack()">
-      </p-button>
-     
-      <p-button 
-        [raised]="true"
-        label="Editar" 
+        label="Editar"
         icon="pi pi-pen-to-square"
-        severity="warning">
+        severity="warning"
+        (click)="showEditModal()"
+      >
       </p-button>
-
     </div>
   </div>
 </div>
+
+<!-- edit coin dialog -->
+<p-dialog
+  id="edit-dialog"
+  header="Editar moneda"
+  [modal]="true"
+  [(visible)]="isVisibleEditModal"
+>
+  <p-dropdown
+    [options]="conservationsStates"
+    [(ngModel)]="conservationStateSelected"
+    optionLabel="name"
+    [showClear]="true"
+    appendTo="body"
+    placeholder="Seleccione un estado"
+  >
+    <ng-template pTemplate="selectedItem">
+      <div
+        class="dropdown-options-file-container"
+        *ngIf="conservationStateSelected"
+      >
+        <div class="tag-container">
+          <p-tag
+            [value]="conservationStateSelected.name"
+            [severity]="
+              getConservationColors(conservationStateSelected.name ?? '-')
+            "
+          >
+          </p-tag>
+        </div>
+        <span>{{ conservationStateSelected.description }}</span>
+        <i class="pi pi-info-circle" style="color: dodgerblue"></i>
+      </div>
+    </ng-template>
+    <ng-template let-conservationsState pTemplate="item">
+      <div class="dropdown-options-file-container">
+        <div class="tag-container">
+          <p-tag
+            [value]="conservationsState.name"
+            [severity]="getConservationColors(conservationsState.name ?? '-')"
+          >
+          </p-tag>
+        </div>
+        <span>{{ conservationsState.description }}</span>
+        <i class="pi pi-info-circle" style="color: dodgerblue"></i>
+      </div>
+    </ng-template>
+  </p-dropdown>
+
+  <div>
+    <p-inputNumber
+      [(ngModel)]="unitsSelected"
+      [showButtons]="true"
+      buttonLayout="horizontal"
+      inputId="horizontal"
+      spinnerMode="horizontal"
+      [step]="1"
+      decrementButtonClass="p-button-danger"
+      incrementButtonClass="p-button-success"
+      incrementButtonIcon="pi pi-plus"
+      decrementButtonIcon="pi pi-minus"
+      suffix=" uds"
+    />
+  </div>
+
+  <div class="buttons-container">
+    <p-button
+      label="Cancelar"
+      severity="secondary"
+      (click)="isVisibleEditModal = false"
+    />
+
+    <p-button label="Guardar" (click)="isVisibleEditModal = false" />
+  </div>
+</p-dialog>

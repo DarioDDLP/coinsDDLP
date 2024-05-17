@@ -8,17 +8,31 @@ import { EuroCoin } from '../../../interfaces/euroCoin.interface';
 import { BadgeModule } from 'primeng/badge';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
+import { DialogModule } from 'primeng/dialog';
+import { conservationStates, getConservationColors } from '../../../shared/config/conservation-states';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { InputNumberModule } from 'primeng/inputnumber';
 @Component({
   selector: 'app-euros-detail',
   standalone: true,
   templateUrl: './euros-detail.component.html',
   styleUrl: './euros-detail.component.scss',
-  imports: [EuroValuePipe, BadgeModule, TagModule, ButtonModule]
+  imports: [CommonModule, EuroValuePipe, BadgeModule, ButtonModule, DialogModule, DropdownModule, FormsModule, InputNumberModule, TagModule]
 })
 export default class EurosDetailComponent {
   getNametoFlags = getNametoFlags;
   coin: EuroCoin | null = null;
+  getConservationColors = getConservationColors;
+
+  // Modal dialog
+  isVisibleEditModal = false;
+  conservationsStates = conservationStates;
+  conservationStateSelected: any;
+  unitsSelected: number = 0;
+
+
 
   dataCoin = {
     "id": 75,
@@ -163,23 +177,6 @@ export default class EurosDetailComponent {
     // })
   }
 
-  getConservationColors(conservation: string): string {
-    switch (conservation) {
-      case 'SC':
-        return 'success';
-      case 'MBC':
-      case 'EBC':
-        return 'info';
-      case 'BC':
-      case 'RC':
-        return 'warning';
-      case 'MC':
-        return 'danger';
-      default:
-        return '-';
-    }
-  }
-
   async getCoinById(id: string) {
     try {
       this.coin = await this._firebaseService.getCoinById(id)
@@ -190,5 +187,9 @@ export default class EurosDetailComponent {
 
   goBack() {
     this._location.back();
+  }
+
+  showEditModal() {
+    this.isVisibleEditModal = true;
   }
 }

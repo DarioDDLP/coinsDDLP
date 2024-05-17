@@ -2,6 +2,7 @@
     display: flex;
     justify-content: center;
 
+
     .card-details {
         background-color: white;
         padding: 20px;
@@ -233,5 +234,22 @@
 
         }
 
+    }
+}
+
+// edit coin dialog
+#edit-dialog {
+    .buttons-container {
+        margin-top: 25px;
+    }
+}
+
+.dropdown-options-file-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .tag-container {
+        width: 30px;
     }
 }
