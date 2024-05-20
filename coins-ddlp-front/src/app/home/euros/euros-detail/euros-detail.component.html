@@ -229,7 +229,7 @@
   <div class="body-container">
     <div class="dropdown-container">
       <p-dropdown
-        [options]="conservationsStates"
+        [options]="conservationStates"
         [(ngModel)]="conservationStateSelected"
         optionLabel="name"
         [showClear]="true"
@@ -320,7 +320,7 @@
         severity="danger"
         (click)="isVisibleEditModal = false"
       />
-      <p-button label="Guardar" (click)="isVisibleEditModal = false" />
+      <p-button label="Guardar" (click)="updateCoin()" />
     </div>
   </div>
 </p-dialog>

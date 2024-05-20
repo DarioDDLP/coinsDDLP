@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DocumentData, DocumentSnapshot, Firestore, collectionData, deleteDoc, doc, getDoc, getDocs, orderBy, query } from '@angular/fire/firestore';
+import { DocumentData, DocumentSnapshot, Firestore, collectionData, deleteDoc, doc, getDoc, getDocs, orderBy, query, updateDoc } from '@angular/fire/firestore';
 import { addDoc, collection } from 'firebase/firestore';
 import { Observable, map } from 'rxjs';
 import { EuroCoin } from '../interfaces/euroCoin.interface';
@@ -63,6 +63,11 @@ export class FirebaseService {
     const ref = doc(this._Firestore, 'euro/' + id);
     const docSnap = await getDoc(ref);
     if (docSnap.exists()) return docSnap.data();
+  }
+
+  updateCoin(id: string, data: any): Promise<any> {
+    const refEdit = doc(this._Firestore, 'euro/' + id)
+    return updateDoc(refEdit, data)
   }
 
   async pruebaDeletemuchas() {

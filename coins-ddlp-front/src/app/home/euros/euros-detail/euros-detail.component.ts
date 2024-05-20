@@ -25,18 +25,17 @@ import { TooltipModule } from 'primeng/tooltip';
   imports: [CommonModule, EuroValuePipe, BadgeModule, ButtonModule, DialogModule, DropdownModule, FormsModule, InputNumberModule, InputTextareaModule, FloatLabelModule, TagModule, TooltipModule]
 })
 export default class EurosDetailComponent {
-  getNametoFlags = getNametoFlags;
   coin: EuroCoin | null = null;
+  id: string | undefined = undefined;
   getConservationColors = getConservationColors;
+  getNametoFlags = getNametoFlags;
 
-  // Modal dialog
+  // Modal dialog variables
   isVisibleEditModal = false;
-  conservationsStates = conservationStates;
+  conservationStates = conservationStates;
   conservationStateSelected: any;
   unitsSelected: number = 0;
   editedObservations: string = '';
-
-
 
   dataCoin = {
     "id": 75,
@@ -173,7 +172,8 @@ export default class EurosDetailComponent {
   ) { }
 
   async ngOnInit() {
-    await this.getCoinById(this._route.snapshot.paramMap.get('id')!)
+    this.id = this._route.snapshot.paramMap.get('id')!;
+    await this.getCoinById(this.id)
     console.log(this.coin);
 
     // this._numistaServices.getCoinByIdNum(this.idNum).subscribe(coin => {
@@ -184,9 +184,33 @@ export default class EurosDetailComponent {
   async getCoinById(id: string) {
     try {
       this.coin = await this._firebaseService.getCoinById(id)
+      this.conservationStateSelected = this.conservationStates.find(state => state.
+        name === this.coin!.conservation
+      )
+      this.unitsSelected = +this.coin?.uds!
+      this.editedObservations = this.coin?.observations!
     } catch (error) {
       console.error(error);
     }
+  }
+
+  async updateCoin() {
+
+    try {
+      await this._firebaseService.updateCoin(this.id!, {
+        conservation: this.conservationStateSelected!.name,
+        uds: this.unitsSelected.toString(),
+        observations: this.editedObservations
+      })
+
+      this.coin = await this._firebaseService.getCoinById(this.id!)
+
+    } catch (error) {
+      console.log(error);
+    }
+
+    this.isVisibleEditModal = false;
+
   }
 
   goBack() {
