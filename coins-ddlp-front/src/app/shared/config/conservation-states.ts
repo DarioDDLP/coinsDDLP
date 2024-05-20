@@ -1,4 +1,6 @@
-export const conservationStates = [
+import { ConservationState } from "../../interfaces/conservationStates.interface";
+
+export const conservationStates: ConservationState[] = [
     {
         id: 0,
         name: 'ND',
