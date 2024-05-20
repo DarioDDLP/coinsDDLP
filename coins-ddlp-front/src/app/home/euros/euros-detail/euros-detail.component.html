@@ -16,13 +16,15 @@
           [severity]="getConservationColors(coin?.conservation ?? '-')"
         ></p-tag>
       </div>
-
       <h2>{{ coin?.year }}</h2>
+
+      @if (coin && coin.uds) {
       <p-badge
-        [value]="coin?.uds"
+        [value]="coin.uds"
         [severity]="coin && +coin.uds! <= 0 ? 'danger' : 'success'"
       >
       </p-badge>
+      }
     </div>
   </div>
 
@@ -224,70 +226,101 @@
   [modal]="true"
   [(visible)]="isVisibleEditModal"
 >
-  <p-dropdown
-    [options]="conservationsStates"
-    [(ngModel)]="conservationStateSelected"
-    optionLabel="name"
-    [showClear]="true"
-    appendTo="body"
-    placeholder="Seleccione un estado"
-  >
-    <ng-template pTemplate="selectedItem">
-      <div
-        class="dropdown-options-file-container"
-        *ngIf="conservationStateSelected"
+  <div class="body-container">
+    <div class="dropdown-container">
+      <p-dropdown
+        [options]="conservationsStates"
+        [(ngModel)]="conservationStateSelected"
+        optionLabel="name"
+        [showClear]="true"
+        appendTo="body"
+        placeholder="Seleccione estado de conservación"
+        [style]="{ width: '100%' }"
       >
-        <div class="tag-container">
-          <p-tag
-            [value]="conservationStateSelected.name"
-            [severity]="
-              getConservationColors(conservationStateSelected.name ?? '-')
-            "
-          >
-          </p-tag>
-        </div>
-        <span>{{ conservationStateSelected.description }}</span>
-        <i class="pi pi-info-circle" style="color: dodgerblue"></i>
-      </div>
-    </ng-template>
-    <ng-template let-conservationsState pTemplate="item">
-      <div class="dropdown-options-file-container">
-        <div class="tag-container">
-          <p-tag
-            [value]="conservationsState.name"
-            [severity]="getConservationColors(conservationsState.name ?? '-')"
-          >
-          </p-tag>
-        </div>
-        <span>{{ conservationsState.description }}</span>
-        <i class="pi pi-info-circle" style="color: dodgerblue"></i>
-      </div>
-    </ng-template>
-  </p-dropdown>
-
-  <div>
-    <p-inputNumber
-      [(ngModel)]="unitsSelected"
-      [showButtons]="true"
-      buttonLayout="horizontal"
-      inputId="horizontal"
-      spinnerMode="horizontal"
-      [step]="1"
-      decrementButtonClass="p-button-danger"
-      incrementButtonClass="p-button-success"
-      incrementButtonIcon="pi pi-plus"
-      decrementButtonIcon="pi pi-minus"
-      suffix=" uds"
-    />
-  </div>
-
-  <div class="buttons-container">
-    <p-button
-      label="Cancelar"
-      severity="secondary"
-      (click)="isVisibleEditModal = false"
-    />
-
-    <p-button label="Guardar" (click)="isVisibleEditModal = false" />
+        <ng-template pTemplate="selectedItem">
+          @if (conservationStateSelected) {
+          <div class="dropdown-options-file-container">
+            <div class="tag-container">
+              <p-tag
+                [value]="conservationStateSelected.name"
+                [severity]="
+                  getConservationColors(conservationStateSelected.name ?? '-')
+                "
+              >
+              </p-tag>
+            </div>
+            <span class="truncate">{{
+              conservationStateSelected.description
+            }}</span>
+            <i
+              [pTooltip]="conservationStateSelected.text"
+              tooltipPosition="bottom"
+              class="pi pi-info-circle"
+              style="color: dodgerblue"
+            ></i>
+          </div>
+          }
+        </ng-template>
+        <ng-template let-conservationsState pTemplate="item">
+          <div class="dropdown-options-file-container">
+            <div class="tag-container">
+              <p-tag
+                [value]="conservationsState.name"
+                [severity]="
+                  getConservationColors(conservationsState.name ?? '-')
+                "
+              >
+              </p-tag>
+            </div>
+            <span>{{ conservationsState.description }}</span>
+            <i
+              [pTooltip]="conservationsState.text"
+              tooltipPosition="bottom"
+              appendTo="body"
+              class="pi pi-info-circle"
+              style="color: dodgerblue"
+            ></i>
+          </div>
+        </ng-template>
+      </p-dropdown>
+    </div>
+    <div class="input-number-container">
+      <p-inputNumber
+        [(ngModel)]="unitsSelected"
+        [showButtons]="true"
+        buttonLayout="horizontal"
+        inputId="horizontal"
+        spinnerMode="horizontal"
+        [step]="1"
+        [min]="0"
+        decrementButtonClass="p-button-secondary"
+        incrementButtonClass="p-button-secondary"
+        incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus"
+        suffix=" uds"
+        [size]="14"
+      />
+    </div>
+    <div class="textarea-container">
+      <p-floatLabel>
+        <textarea
+          id="float-input"
+          rows="5"
+          cols="30"
+          pInputTextarea
+          [(ngModel)]="editedObservations"
+        >
+        </textarea>
+        <label for="float-input">Observaciones</label>
+      </p-floatLabel>
+    </div>
+    <div class="buttons-container">
+      <p-button
+        label="Cancelar"
+        severity="danger"
+        (click)="isVisibleEditModal = false"
+      />
+      <p-button label="Guardar" (click)="isVisibleEditModal = false" />
+    </div>
   </div>
 </p-dialog>

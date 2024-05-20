@@ -13,3 +13,9 @@ body {
         }
     }
 }
+
+@layer primeng {
+    .p-tooltip-text {
+        font-size: 12px;
+    }
+}

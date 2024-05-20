@@ -14,12 +14,15 @@ import { conservationStates, getConservationColors } from '../../../shared/confi
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { TooltipModule } from 'primeng/tooltip';
 @Component({
   selector: 'app-euros-detail',
   standalone: true,
   templateUrl: './euros-detail.component.html',
   styleUrl: './euros-detail.component.scss',
-  imports: [CommonModule, EuroValuePipe, BadgeModule, ButtonModule, DialogModule, DropdownModule, FormsModule, InputNumberModule, TagModule]
+  imports: [CommonModule, EuroValuePipe, BadgeModule, ButtonModule, DialogModule, DropdownModule, FormsModule, InputNumberModule, InputTextareaModule, FloatLabelModule, TagModule, TooltipModule]
 })
 export default class EurosDetailComponent {
   getNametoFlags = getNametoFlags;
@@ -31,6 +34,7 @@ export default class EurosDetailComponent {
   conservationsStates = conservationStates;
   conservationStateSelected: any;
   unitsSelected: number = 0;
+  editedObservations: string = '';
 
 
 
