@@ -19,6 +19,13 @@
             width: 98%;
         }
 
+        .spinner-container {
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .p-datatable.p-datatable-sm .p-datatable-tbody>tr>td,
         .p-datatable.p-datatable-sm .p-datatable-thead>tr>th {
             padding: 0.2rem;

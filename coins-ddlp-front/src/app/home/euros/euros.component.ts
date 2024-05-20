@@ -1,19 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 // Components PrimeNG
 import { TableModule } from 'primeng/table';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { FirebaseService } from '../../services/firebase.service';
 import { EuroCoin } from '../../interfaces/euroCoin.interface';
-import { Router } from '@angular/router';
 import { getNametoFlags } from '../../shared/helpers/normalize-names';
 @Component({
   selector: 'app-euros',
   standalone: true,
-  imports: [CommonModule, TableModule, BadgeModule, ButtonModule],
+  imports: [CommonModule, TableModule, BadgeModule, ButtonModule, ProgressSpinnerModule],
   templateUrl: './euros.component.html',
   styleUrl: './euros.component.scss'
 })
@@ -22,16 +23,26 @@ export default class EurosComponent {
   euros: EuroCoin[] = [];
   getNametoFlags = getNametoFlags;
 
+  isLoading = false;
+
   constructor(
     private _firebaseService: FirebaseService,
     private _router: Router
   ) { }
 
   ngOnInit() {
-    this._firebaseService.getAll().subscribe(coins => {
-      console.log(coins);
-      this.euros = coins;
-    })
+    this.isLoading = true;
+    this._firebaseService.getAll().subscribe({
+      next: (coins) => {
+        console.log(coins);
+        this.euros = coins;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.isLoading = false;
+      }
+    });
   }
 
   async addInfo() {

@@ -1,4 +1,5 @@
 <div class="card-table">
+  @defer (when !isLoading) {
   <div class="card-table-header">
     <p-button (click)="addInfo()">Add info</p-button>
     <p-button (click)="deleteAll()">delete</p-button>
@@ -38,4 +39,9 @@
       </tr>
     </ng-template>
   </p-table>
+  } @placeholder {
+  <div class="spinner-container">
+    <p-progressSpinner />
+  </div>
+  }
 </div>
