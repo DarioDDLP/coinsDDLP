@@ -1,4 +1,5 @@
 <div class="card-details">
+  @if (!isLoading) {
   <div class="header-container">
     <div class="flag-container">
       <img [src]="getNametoFlags(dataCoin.issuer.name)" alt="flag" />
@@ -217,6 +218,11 @@
       </p-button>
     </div>
   </div>
+  } @else {
+  <div class="spinner-container">
+    <p-progressSpinner />
+  </div>
+  }
 </div>
 
 <!-- edit coin dialog -->

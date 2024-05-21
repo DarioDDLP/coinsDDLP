@@ -18,6 +18,13 @@
             width: 98%;
         }
 
+        .spinner-container {
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .header-container {
             display: flex;
             gap: 2rem;

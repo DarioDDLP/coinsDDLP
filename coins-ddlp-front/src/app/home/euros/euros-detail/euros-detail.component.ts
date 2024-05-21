@@ -17,18 +17,22 @@ import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { TooltipModule } from 'primeng/tooltip';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 @Component({
   selector: 'app-euros-detail',
   standalone: true,
   templateUrl: './euros-detail.component.html',
   styleUrl: './euros-detail.component.scss',
-  imports: [CommonModule, EuroValuePipe, BadgeModule, ButtonModule, DialogModule, DropdownModule, FormsModule, InputNumberModule, InputTextareaModule, FloatLabelModule, TagModule, TooltipModule]
+  imports: [CommonModule, EuroValuePipe, BadgeModule, ButtonModule, DialogModule, DropdownModule, FormsModule, InputNumberModule, InputTextareaModule, FloatLabelModule, ProgressSpinnerModule, TagModule, TooltipModule]
 })
 export default class EurosDetailComponent {
   coin: EuroCoin | null = null;
   id: string | undefined = undefined;
   getConservationColors = getConservationColors;
   getNametoFlags = getNametoFlags;
+
+  isLoading = false;
 
   // Modal dialog variables
   isVisibleEditModal = false;
@@ -172,6 +176,7 @@ export default class EurosDetailComponent {
   ) { }
 
   async ngOnInit() {
+    this.isLoading = true;
     this.id = this._route.snapshot.paramMap.get('id')!;
     await this.getCoinById(this.id)
     console.log(this.coin);
@@ -189,28 +194,26 @@ export default class EurosDetailComponent {
       )
       this.unitsSelected = +this.coin?.uds!
       this.editedObservations = this.coin?.observations!
+      this.isLoading = false;
     } catch (error) {
       console.error(error);
+      this.isLoading = false;
     }
   }
 
   async updateCoin() {
-
+    this.isLoading = true;
     try {
       await this._firebaseService.updateCoin(this.id!, {
         conservation: this.conservationStateSelected!.name,
         uds: this.unitsSelected.toString(),
         observations: this.editedObservations
       })
-
-      this.coin = await this._firebaseService.getCoinById(this.id!)
-
+      this.getCoinById(this.id!)
     } catch (error) {
       console.log(error);
     }
-
     this.isVisibleEditModal = false;
-
   }
 
   goBack() {
