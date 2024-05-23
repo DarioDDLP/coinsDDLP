@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Components PrimeNG
@@ -14,7 +14,7 @@ import { getNametoFlags } from '../../shared/helpers/normalize-names';
 @Component({
   selector: 'app-euros',
   standalone: true,
-  imports: [CommonModule, TableModule, BadgeModule, ButtonModule, ProgressSpinnerModule],
+  imports: [CommonModule, BadgeModule, ButtonModule, ProgressSpinnerModule, TableModule,],
   templateUrl: './euros.component.html',
   styleUrl: './euros.component.scss'
 })
@@ -23,22 +23,22 @@ export default class EurosComponent {
   private _firebaseService = inject(FirebaseService)
   private _router = inject(Router)
 
-  euros: EuroCoin[] = [];
+  euros = signal<EuroCoin[]>([]);
   getNametoFlags = getNametoFlags;
 
-  isLoading = false;
+  isLoading = signal(false);
 
   ngOnInit() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     this._firebaseService.getAll().subscribe({
       next: (coins) => {
         console.log(coins);
-        this.euros = coins;
-        this.isLoading = false;
+        this.euros.set(coins);
+        this.isLoading.set(false);
       },
       error: (err) => {
         console.error(err);
-        this.isLoading = false;
+        this.isLoading.set(false);
       }
     });
   }
@@ -154,9 +154,4 @@ export default class EurosComponent {
     this._router.navigate(['/home/euros/' + id]);
     console.log(id);
   }
-
-
-
-
-
 }
