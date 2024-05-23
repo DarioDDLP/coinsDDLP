@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DocumentData, DocumentSnapshot, Firestore, collectionData, deleteDoc, doc, getDoc, getDocs, orderBy, query, updateDoc } from '@angular/fire/firestore';
 import { addDoc, collection } from 'firebase/firestore';
 import { Observable, map } from 'rxjs';
@@ -8,11 +8,10 @@ import { EuroCoin } from '../interfaces/euroCoin.interface';
   providedIn: 'root'
 })
 export class FirebaseService {
+  // Services
+  private _Firestore = inject(Firestore);
 
   euros = collection(this._Firestore, 'euro')
-
-  constructor(private _Firestore: Firestore) {
-  }
 
   getAll(): Observable<EuroCoin[]> {
     const customOrder: { [denomination: string]: number } = {
