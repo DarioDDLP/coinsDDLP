@@ -205,7 +205,7 @@ export default class EurosDetailComponent {
     this.isLoading = true;
     try {
       await this._firebaseService.updateCoin(this.id!, {
-        conservation: this.conservationStateSelected!.name,
+        conservation: this.conservationStateSelected ?? 'ND',
         uds: this.unitsSelected.toString(),
         observations: this.editedObservations
       })
