@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NumistaService } from '../../../services/numista.service';
 import { getNametoFlags } from '../../../shared/helpers/normalize-names';
@@ -27,6 +27,12 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   imports: [CommonModule, EuroValuePipe, BadgeModule, ButtonModule, DialogModule, DropdownModule, FormsModule, InputNumberModule, InputTextareaModule, FloatLabelModule, ProgressSpinnerModule, TagModule, TooltipModule]
 })
 export default class EurosDetailComponent {
+  // Services
+  private _route = inject(ActivatedRoute);
+  private _firebaseService = inject(FirebaseService);
+  private _numistaService = inject(NumistaService);
+  private _locationsService = inject(Location);
+
   coin: EuroCoin | null = null;
   id: string | undefined = undefined;
   getConservationColors = getConservationColors;
@@ -168,20 +174,13 @@ export default class EurosDetailComponent {
     ]
   }
 
-  constructor(
-    private _route: ActivatedRoute,
-    private _firebaseService: FirebaseService,
-    private _numistaServices: NumistaService,
-    private _location: Location
-  ) { }
-
   async ngOnInit() {
     this.isLoading = true;
     this.id = this._route.snapshot.paramMap.get('id')!;
     await this.getCoinById(this.id)
     console.log(this.coin);
 
-    // this._numistaServices.getCoinByIdNum(this.idNum).subscribe(coin => {
+    // this._numistaService.getCoinByIdNum(this.idNum).subscribe(coin => {
     //   console.log(coin);
     // })
   }
@@ -217,7 +216,7 @@ export default class EurosDetailComponent {
   }
 
   goBack() {
-    this._location.back();
+    this._locationsService.back();
   }
 
   showEditModal() {
