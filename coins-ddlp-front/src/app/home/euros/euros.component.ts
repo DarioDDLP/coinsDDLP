@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 // Components PrimeNG
@@ -19,16 +19,14 @@ import { getNametoFlags } from '../../shared/helpers/normalize-names';
   styleUrl: './euros.component.scss'
 })
 export default class EurosComponent {
+  // Services
+  private _firebaseService = inject(FirebaseService)
+  private _router = inject(Router)
 
   euros: EuroCoin[] = [];
   getNametoFlags = getNametoFlags;
 
   isLoading = false;
-
-  constructor(
-    private _firebaseService: FirebaseService,
-    private _router: Router
-  ) { }
 
   ngOnInit() {
     this.isLoading = true;
