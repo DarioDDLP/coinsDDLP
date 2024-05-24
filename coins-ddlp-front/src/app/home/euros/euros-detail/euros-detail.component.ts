@@ -1,27 +1,30 @@
-import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NumistaService } from '../../../services/numista.service';
-import { getNametoFlags } from '../../../shared/helpers/normalize-names';
+import { CommonModule, Location } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { ConservationState } from '../../../interfaces/conservationStates.interface';
+import { conservationStates, getConservationColors } from '../../../shared/config/conservation-states';
+import { EuroCoin } from '../../../interfaces/euroCoin.interface';
+import { eurosDetailEditModalToast } from '../../../shared/config/toast-messages';
 import { EuroValuePipe } from "../../../shared/pipes/euro-value.pipe";
 import { FirebaseService } from '../../../services/firebase.service';
-import { EuroCoin } from '../../../interfaces/euroCoin.interface';
+import { getNametoFlags } from '../../../shared/helpers/normalize-names';
+import { NumistaService } from '../../../services/numista.service';
+
+// Components PrimeNG
 import { BadgeModule } from 'primeng/badge';
-import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
-import { CommonModule, Location } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
-import { conservationStates, getConservationColors } from '../../../shared/config/conservation-states';
 import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { TooltipModule } from 'primeng/tooltip';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { ConservationState } from '../../../interfaces/conservationStates.interface';
 import { MessageService } from 'primeng/api';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
-import { eurosDetailEditModalToast } from '../../../shared/config/toast-messages';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-euros-detail',
@@ -39,7 +42,6 @@ export default class EurosDetailComponent {
   private _locationsService = inject(Location);
   private _MessageService = inject(MessageService);
 
-  // coin: EuroCoin | null = null;
   coin = signal<EuroCoin | null>(null);
   id: string = '';
   getConservationColors = getConservationColors;

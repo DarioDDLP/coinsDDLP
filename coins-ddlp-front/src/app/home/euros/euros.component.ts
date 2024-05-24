@@ -2,15 +2,15 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
-// Components PrimeNG
-import { TableModule } from 'primeng/table';
-import { BadgeModule } from 'primeng/badge';
-import { ButtonModule } from 'primeng/button';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-
 import { FirebaseService } from '../../services/firebase.service';
 import { EuroCoin } from '../../interfaces/euroCoin.interface';
 import { getNametoFlags } from '../../shared/helpers/normalize-names';
+
+// Components PrimeNG
+import { BadgeModule } from 'primeng/badge';
+import { ButtonModule } from 'primeng/button';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TableModule } from 'primeng/table';
 @Component({
   selector: 'app-euros',
   standalone: true,
