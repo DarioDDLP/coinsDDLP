@@ -19,13 +19,17 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { TooltipModule } from 'primeng/tooltip';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ConservationState } from '../../../interfaces/conservationStates.interface';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { eurosDetailEditModalToast } from '../../../shared/config/toast-messages';
 
 @Component({
   selector: 'app-euros-detail',
   standalone: true,
   templateUrl: './euros-detail.component.html',
   styleUrl: './euros-detail.component.scss',
-  imports: [CommonModule, EuroValuePipe, BadgeModule, ButtonModule, DialogModule, DropdownModule, FormsModule, InputNumberModule, InputTextareaModule, FloatLabelModule, ProgressSpinnerModule, TagModule, TooltipModule]
+  imports: [CommonModule, EuroValuePipe, BadgeModule, ButtonModule, DialogModule, DropdownModule, FormsModule, InputNumberModule, InputTextareaModule, FloatLabelModule, ProgressSpinnerModule, TagModule, ToastModule, TooltipModule],
+  providers: [MessageService]
 })
 export default class EurosDetailComponent {
   // Services
@@ -33,6 +37,7 @@ export default class EurosDetailComponent {
   private _firebaseService = inject(FirebaseService);
   private _numistaService = inject(NumistaService);
   private _locationsService = inject(Location);
+  private _MessageService = inject(MessageService);
 
   // coin: EuroCoin | null = null;
   coin = signal<EuroCoin | null>(null);
@@ -48,6 +53,7 @@ export default class EurosDetailComponent {
   conservationStateSelected = signal<ConservationState | null>(null);
   unitsSelected = signal(0);
   editedObservations = signal('');
+  eurosDetailEditModalToast = eurosDetailEditModalToast;
 
   dataCoin = {
     "id": 75,
@@ -211,7 +217,9 @@ export default class EurosDetailComponent {
         observations: this.editedObservations()
       })
       this.getCoinById(this.id!)
+      this._MessageService.add(this.eurosDetailEditModalToast.success)
     } catch (error) {
+      this._MessageService.add(this.eurosDetailEditModalToast.error)
       console.log(error);
     }
     this.isVisibleEditModal.set(false);
