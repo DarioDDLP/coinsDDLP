@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NumistaService } from '../../../services/numista.service';
 import { getNametoFlags } from '../../../shared/helpers/normalize-names';
@@ -18,6 +18,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { TooltipModule } from 'primeng/tooltip';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ConservationState } from '../../../interfaces/conservationStates.interface';
 
 @Component({
   selector: 'app-euros-detail',
@@ -33,19 +34,20 @@ export default class EurosDetailComponent {
   private _numistaService = inject(NumistaService);
   private _locationsService = inject(Location);
 
-  coin: EuroCoin | null = null;
-  id: string | undefined = undefined;
+  // coin: EuroCoin | null = null;
+  coin = signal<EuroCoin | null>(null);
+  id: string = '';
   getConservationColors = getConservationColors;
   getNametoFlags = getNametoFlags;
 
-  isLoading = false;
+  isLoading = signal(false);
 
   // Modal dialog variables
-  isVisibleEditModal = false;
-  conservationStates = conservationStates;
-  conservationStateSelected: any;
-  unitsSelected: number = 0;
-  editedObservations: string = '';
+  isVisibleEditModal = signal(false);
+  conservationStates = signal(conservationStates);
+  conservationStateSelected = signal<ConservationState | null>(null);
+  unitsSelected = signal(0);
+  editedObservations = signal('');
 
   dataCoin = {
     "id": 75,
@@ -175,10 +177,10 @@ export default class EurosDetailComponent {
   }
 
   async ngOnInit() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.id = this._route.snapshot.paramMap.get('id')!;
     await this.getCoinById(this.id)
-    console.log(this.coin);
+    console.log(this.coin());
 
     // this._numistaService.getCoinByIdNum(this.idNum).subscribe(coin => {
     //   console.log(coin);
@@ -187,32 +189,32 @@ export default class EurosDetailComponent {
 
   async getCoinById(id: string) {
     try {
-      this.coin = await this._firebaseService.getCoinById(id)
-      this.conservationStateSelected = this.conservationStates.find(state => state.
-        name === this.coin!.conservation
-      )
-      this.unitsSelected = +this.coin?.uds!
-      this.editedObservations = this.coin?.observations!
-      this.isLoading = false;
+      this.coin.set(await this._firebaseService.getCoinById(id))
+      this.conservationStateSelected.set(this.conservationStates().find(state => state.name === this.coin()?.conservation) || this.conservationStates()[0]);
+      this.unitsSelected.set(+this.coin()?.uds!);
+      this.editedObservations.set(this.coin()?.observations!);
+      this.isLoading.set(false);
     } catch (error) {
       console.error(error);
-      this.isLoading = false;
+      this.isLoading.set(false);
     }
   }
 
   async updateCoin() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     try {
       await this._firebaseService.updateCoin(this.id!, {
-        conservation: this.conservationStateSelected ?? 'ND',
-        uds: this.unitsSelected.toString(),
-        observations: this.editedObservations
+        conservation: this.conservationStateSelected()
+          ? this.conservationStateSelected()!.name
+          : 'ND',
+        uds: this.unitsSelected().toString(),
+        observations: this.editedObservations()
       })
       this.getCoinById(this.id!)
     } catch (error) {
       console.log(error);
     }
-    this.isVisibleEditModal = false;
+    this.isVisibleEditModal.set(false);
   }
 
   goBack() {
@@ -220,6 +222,6 @@ export default class EurosDetailComponent {
   }
 
   showEditModal() {
-    this.isVisibleEditModal = true;
+    this.isVisibleEditModal.set(true);
   }
 }

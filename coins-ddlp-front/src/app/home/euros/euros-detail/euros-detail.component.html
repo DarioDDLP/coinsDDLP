@@ -1,5 +1,5 @@
 <div class="card-details">
-  @if (!isLoading) {
+  @if (!isLoading()) {
   <div class="header-container">
     <div class="flag-container">
       <img [src]="getNametoFlags(dataCoin.issuer.name)" alt="flag" />
@@ -13,16 +13,16 @@
     <div class="header-info-container">
       <div>
         <p-tag
-          [value]="coin?.conservation ? coin?.conservation : 'ND'"
-          [severity]="getConservationColors(coin?.conservation ?? '-')"
+          [value]="coin()?.conservation ? coin()?.conservation : 'ND'"
+          [severity]="getConservationColors(coin()?.conservation ?? '-')"
         ></p-tag>
       </div>
-      <h2>{{ coin?.year }}</h2>
+      <h2>{{ coin()?.year }}</h2>
 
-      @if (coin && coin.uds) {
+      @if (coin() && coin()?.uds) {
       <p-badge
-        [value]="coin.uds"
-        [severity]="coin && +coin.uds! <= 0 ? 'danger' : 'success'"
+        [value]="coin()?.uds"
+        [severity]="coin() && +coin()?.uds! <= 0 ? 'danger' : 'success'"
       >
       </p-badge>
       }
@@ -194,7 +194,7 @@
       </div>
 
       <span class="span-observations">Observaciones:</span>
-      <p class="observations">{{ coin?.observations }}</p>
+      <p class="observations">{{ coin()?.observations }}</p>
     </div>
   </div>
 
@@ -235,7 +235,7 @@
   <div class="body-container">
     <div class="dropdown-container">
       <p-dropdown
-        [options]="conservationStates"
+        [options]="conservationStates()"
         [(ngModel)]="conservationStateSelected"
         optionLabel="name"
         [showClear]="true"
@@ -244,22 +244,22 @@
         [style]="{ width: '100%' }"
       >
         <ng-template pTemplate="selectedItem">
-          @if (conservationStateSelected) {
+          @if (conservationStateSelected()) {
           <div class="dropdown-options-file-container">
             <div class="tag-container">
               <p-tag
-                [value]="conservationStateSelected.name"
+                [value]="conservationStateSelected()!.name"
                 [severity]="
-                  getConservationColors(conservationStateSelected.name ?? '-')
+                  getConservationColors(conservationStateSelected()!.name)
                 "
               >
               </p-tag>
             </div>
             <span class="truncate">{{
-              conservationStateSelected.description
+              conservationStateSelected()!.description
             }}</span>
             <i
-              [pTooltip]="conservationStateSelected.text"
+              [pTooltip]="conservationStateSelected()!.text"
               tooltipPosition="bottom"
               class="pi pi-info-circle"
               style="color: dodgerblue"
@@ -272,9 +272,7 @@
             <div class="tag-container">
               <p-tag
                 [value]="conservationsState.name"
-                [severity]="
-                  getConservationColors(conservationsState.name ?? '-')
-                "
+                [severity]="getConservationColors(conservationsState.name)"
               >
               </p-tag>
             </div>
@@ -324,7 +322,7 @@
       <p-button
         label="Cancelar"
         severity="danger"
-        (click)="isVisibleEditModal = false"
+        (click)="isVisibleEditModal.set(false)"
       />
       <p-button label="Guardar" (click)="updateCoin()" />
     </div>
