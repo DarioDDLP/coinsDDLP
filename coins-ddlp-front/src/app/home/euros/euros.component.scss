@@ -1,7 +1,25 @@
 :host ::ng-deep {
-    width: 100%;
+    .search-container {
+        width: 60%;
+
+        @media screen and (width <=1300px) {
+            width: 90%;
+        }
+
+        @media screen and (width <=576px) {
+            width: 98%;
+        }
+
+        .p-inputtext {
+            width: 100%;
+        }
+
+    }
+
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
 
     .card-table {
         background-color: white;

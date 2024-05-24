@@ -1,3 +1,15 @@
+<div class="search-container">
+  <p-iconField iconPosition="left">
+    <p-inputIcon styleClass="pi pi-search" />
+    <input
+      type="text"
+      pInputText
+      placeholder="Buscar moneda..."
+      (input)="searchEuros($event)"
+    />
+  </p-iconField>
+</div>
+
 <div class="card-table">
   @if (!isLoading()) {
   <div class="card-table-header">

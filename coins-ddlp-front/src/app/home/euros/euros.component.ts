@@ -9,12 +9,15 @@ import { getNametoFlags } from '../../shared/helpers/normalize-names';
 // Components PrimeNG
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
 @Component({
   selector: 'app-euros',
   standalone: true,
-  imports: [CommonModule, BadgeModule, ButtonModule, ProgressSpinnerModule, TableModule,],
+  imports: [CommonModule, BadgeModule, ButtonModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, TableModule,],
   templateUrl: './euros.component.html',
   styleUrl: './euros.component.scss'
 })
@@ -28,7 +31,16 @@ export default class EurosComponent {
 
   isLoading = signal(false);
 
+  searchEuros($event: Event) {
+    console.log($event);
+
+  }
+
   ngOnInit() {
+    this.getAllEuros();
+  }
+
+  getAllEuros() {
     this.isLoading.set(true);
     this._firebaseService.getAll().subscribe({
       next: (coins) => {
