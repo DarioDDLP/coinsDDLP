@@ -11,3 +11,7 @@ export function getNametoFlags(name: string): string {
     });
     return 'assets/flags/' + formattedName + '-flag.png'
 }
+
+export function normalizeString(str: string) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
