@@ -4,8 +4,9 @@
     <input
       type="text"
       pInputText
+      [(ngModel)]="searchText"
       placeholder="Buscar moneda..."
-      (input)="searchEuros($event)"
+      (input)="searchEuros()"
     />
   </p-iconField>
 </div>
@@ -17,7 +18,7 @@
     <p-button (click)="deleteAll()">delete</p-button>
   </div>
   <p-table
-    [value]="euros()"
+    [value]="eurosFiltered()"
     styleClass="p-datatable-sm p-datatable-striped"
     [scrollable]="true"
     scrollHeight="80vh"

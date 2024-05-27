@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { FirebaseService } from '../../services/firebase.service';
 import { EuroCoin } from '../../interfaces/euroCoin.interface';
-import { getNametoFlags } from '../../shared/helpers/normalize-names';
+import { getNametoFlags, normalizeString } from '../../shared/helpers/normalize-strings';
 
 // Components PrimeNG
 import { BadgeModule } from 'primeng/badge';
@@ -17,7 +18,7 @@ import { TableModule } from 'primeng/table';
 @Component({
   selector: 'app-euros',
   standalone: true,
-  imports: [CommonModule, BadgeModule, ButtonModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, TableModule,],
+  imports: [CommonModule, FormsModule, BadgeModule, ButtonModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, TableModule,],
   templateUrl: './euros.component.html',
   styleUrl: './euros.component.scss'
 })
@@ -26,13 +27,35 @@ export default class EurosComponent {
   private _firebaseService = inject(FirebaseService)
   private _router = inject(Router)
 
+  eurosFiltered = signal<EuroCoin[]>([]);
   euros = signal<EuroCoin[]>([]);
+  searchText = signal('');
   getNametoFlags = getNametoFlags;
+  normalizeString = normalizeString;
 
   isLoading = signal(false);
 
-  searchEuros($event: Event) {
-    console.log($event);
+  searchEuros() {
+    this.isLoading.set(true);
+    if (this.searchText()) {
+      const coinToSearch = this.normalizeString(this.searchText().trim()).split(" ");
+      this.eurosFiltered.set(
+        this.euros().filter(coin => {
+          const coinValues = [
+            coin.country,
+            coin.faceValue,
+            coin.year,
+            coin.mint
+          ].map(value => this.normalizeString(value || "")).join(" ");
+          const coinWords = coinValues.split(" ");
+          return coinToSearch.every(term => coinWords.includes(term));
+        })
+      );
+    } else {
+      this.eurosFiltered.set(this.euros());
+      this.searchText.set('');
+    }
+    this.isLoading.set(false);
 
   }
 
@@ -45,6 +68,7 @@ export default class EurosComponent {
     this._firebaseService.getAll().subscribe({
       next: (coins) => {
         console.log(coins);
+        this.eurosFiltered.set(coins);
         this.euros.set(coins);
         this.isLoading.set(false);
       },
