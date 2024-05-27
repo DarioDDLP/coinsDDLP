@@ -9,7 +9,7 @@ import { EuroCoin } from '../../../interfaces/euroCoin.interface';
 import { eurosDetailEditModalToast } from '../../../shared/config/toast-messages';
 import { EuroValuePipe } from "../../../shared/pipes/euro-value.pipe";
 import { FirebaseService } from '../../../services/firebase.service';
-import { getNametoFlags } from '../../../shared/helpers/normalize-names';
+import { getNametoFlags } from '../../../shared/helpers/normalize-strings';
 import { NumistaService } from '../../../services/numista.service';
 
 // Components PrimeNG
