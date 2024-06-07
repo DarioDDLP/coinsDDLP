@@ -14,8 +14,22 @@
 <div class="card-table">
   @if (!isLoading()) {
   <div class="card-table-header">
-    <p-button (click)="addInfo()">Add info</p-button>
-    <p-button (click)="deleteAll()">delete</p-button>
+    <div class="switch-container">
+      <span>Conmemorativas</span>
+      <p-inputSwitch
+        [(ngModel)]="isFilterByCommemoratives"
+        (onChange)="searchEuros()"
+      />
+    </div>
+    <p-dropdown
+      [options]="optionsUds"
+      [(ngModel)]="optionsUdsSelected"
+      [checkmark]="true"
+      optionLabel="name"
+      [showClear]="true"
+      placeholder="Seleccione uds"
+      (onChange)="searchEuros()"
+    />
   </div>
   <p-table
     [value]="eurosFiltered()"
@@ -57,3 +71,6 @@
   </div>
   }
 </div>
+
+<p-button (click)="addInfo()">Add info</p-button>
+<p-button (click)="deleteAll()">delete</p-button>

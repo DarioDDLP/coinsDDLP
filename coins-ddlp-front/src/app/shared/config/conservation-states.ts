@@ -51,20 +51,20 @@ export const conservationStates: ConservationState[] = [
     }
 ]
 
-export function getConservationColors(conservation: string): string {
+export function getConservationColors(conservation: string): "success" | "info" | "warning" | "danger" | "secondary" | "contrast" | undefined {
     switch (conservation) {
         case 'FDC':
         case 'SC':
-            return 'success';
+            return "success";
         case 'MBC':
         case 'EBC':
-            return 'info';
+            return "info";
         case 'BC':
         case 'RC':
-            return 'warning';
+            return "warning";
         case 'MC':
-            return 'danger';
+            return "danger";
         default:
-            return '-';
+            return undefined;
     }
 }

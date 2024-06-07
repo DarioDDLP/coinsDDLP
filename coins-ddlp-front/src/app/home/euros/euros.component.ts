@@ -10,15 +10,18 @@ import { getNametoFlags, normalizeString } from '../../shared/helpers/normalize-
 // Components PrimeNG
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
+import { OptionUds } from '../../interfaces/optionsUds.interface';
 @Component({
   selector: 'app-euros',
   standalone: true,
-  imports: [CommonModule, FormsModule, BadgeModule, ButtonModule, IconFieldModule, InputIconModule, InputTextModule, ProgressSpinnerModule, TableModule,],
+  imports: [CommonModule, FormsModule, BadgeModule, ButtonModule, DropdownModule, IconFieldModule, InputIconModule, InputSwitchModule, InputTextModule, ProgressSpinnerModule, TableModule,],
   templateUrl: './euros.component.html',
   styleUrl: './euros.component.scss'
 })
@@ -35,29 +38,25 @@ export default class EurosComponent {
 
   isLoading = signal(false);
 
-  searchEuros() {
-    this.isLoading.set(true);
-    if (this.searchText()) {
-      const coinToSearch = this.normalizeString(this.searchText().trim()).split(" ");
-      this.eurosFiltered.set(
-        this.euros().filter(coin => {
-          const coinValues = [
-            coin.country,
-            coin.faceValue,
-            coin.year,
-            coin.mint
-          ].map(value => this.normalizeString(value || "")).join(" ");
-          const coinWords = coinValues.split(" ");
-          return coinToSearch.every(term => coinWords.includes(term));
-        })
-      );
-    } else {
-      this.eurosFiltered.set(this.euros());
-      this.searchText.set('');
-    }
-    this.isLoading.set(false);
+  isFilterByCommemoratives = signal(false);
 
-  }
+  optionsUds: OptionUds[] = [
+    {
+      id: 0,
+      name: 'Todas'
+    },
+    {
+      id: 1,
+      name: 'Obtenidas'
+    },
+    {
+      id: 2,
+      name: 'Faltantes'
+    }
+  ];
+
+  optionsUdsSelected = signal<OptionUds | undefined>(undefined);
+
 
   ngOnInit() {
     this.getAllEuros();
@@ -79,92 +78,160 @@ export default class EurosComponent {
     });
   }
 
+  searchEuros() {
+    this.isLoading.set(true);
+    if (this.searchText()) {
+      const coinToSearch = this.normalizeString(this.searchText().trim()).split(" ");
+      this.eurosFiltered.set(
+        this.euros().filter(coin => {
+          const coinValues = [
+            coin.country,
+            coin.faceValue,
+            coin.year,
+            coin.mint
+          ].map(value => this.normalizeString(value || "")).join(" ");
+          const coinWords = coinValues.split(" ");
+          return coinToSearch.every(term => coinWords.includes(term));
+        })
+      );
+    } else {
+      this.eurosFiltered.set(this.euros());
+      this.searchText.set('');
+    }
+    this.filterByCommemoratives();
+    this.filterByUds();
+    this.isLoading.set(false);
+  }
+
+  filterByCommemoratives() {
+    if (this.isFilterByCommemoratives()) {
+      this.eurosFiltered.set(this.eurosFiltered().filter(coin => coin.commemorative));
+    }
+  }
+
+  filterByUds() {
+    switch (this.optionsUdsSelected()?.id) {
+      case 0:
+        break;
+      case 1:
+        this.eurosFiltered.set(this.eurosFiltered().filter(coin => +coin.uds >= 1));
+        break;
+      case 2:
+        this.eurosFiltered.set(this.eurosFiltered().filter(coin => +coin.uds === 0));
+        break;
+      default:
+        break;
+    }
+  }
+
   async addInfo() {
+    const pais = 'Bélgica'
+    const año = '1999'
     const info = [
       {
-        "country": "España",
-        "year": "1999",
+        "country": pais,
+        "year": año,
         "faceValue": "1 Céntimo",
         "mint": "",
         "conservation": "EBC",
         "description": "Rey Alberto II",
+        "commemorative": "",
         "uds": "1",
         "idNum": "73",
         "observations": "Esto es una observación de prueba para ver cómo queda en la web y maquetarla en condiciones."
       },
       {
-        "country": "Bélgica",
-        "year": "2000",
+        "country": pais,
+        "year": año,
         "faceValue": "2 Céntimos",
         "mint": "",
         "conservation": "SC",
         "description": "Rey Alberto II",
+        "commemorative": "",
         "uds": "0",
         "idNum": "78",
         "observations": ""
       },
       {
-        "country": "España",
-        "year": "1999",
+        "country": pais,
+        "year": año,
         "faceValue": "5 Céntimos",
         "mint": "",
         "conservation": "MBC",
         "description": "Rey Alberto II",
+        "commemorative": "",
         "uds": "1",
         "idNum": "74",
         "observations": ""
       },
       {
-        "country": "Bélgica",
-        "year": "1999",
+        "country": pais,
+        "year": año,
         "faceValue": "10 Céntimos",
-        "mint": "A Berlin",
+        "mint": "",
         "conservation": "BC",
         "description": "Rey Alberto II",
+        "commemorative": "",
         "uds": "1",
         "idNum": "75",
         "observations": ""
       },
       {
-        "country": "Bélgica",
-        "year": "1999",
+        "country": pais,
+        "year": año,
         "faceValue": "20 Céntimos",
-        "mint": "D Hamburgo",
+        "mint": "",
         "conservation": "RC",
         "description": "Rey Alberto II",
+        "commemorative": "",
         "uds": "0",
         "idNum": "79",
         "observations": ""
       },
       {
-        "country": "Bélgica",
-        "year": "1999",
+        "country": pais,
+        "year": año,
         "faceValue": "50 Céntimos",
-        "mint": "A Berlin",
+        "mint": "",
         "conservation": "MC",
         "description": "Rey Alberto II",
+        "commemorative": "",
         "uds": "1",
         "idNum": "76",
         "observations": ""
       },
       {
-        "country": "Bélgica",
-        "year": "1999",
+        "country": pais,
+        "year": año,
         "faceValue": "1 Euro",
-        "mint": "J japon",
+        "mint": "",
         "conservation": "EBC",
         "description": "Rey Alberto II",
+        "commemorative": "",
         "uds": "1",
         "idNum": "77",
         "observations": ""
       },
       {
-        "country": "Bélgica",
-        "year": "1999",
+        "country": pais,
+        "year": año,
         "faceValue": "2 Euros",
-        "mint": "F francia",
+        "mint": "",
         "conservation": "",
         "description": "Rey Alberto II",
+        "commemorative": "",
+        "uds": "0",
+        "idNum": "80",
+        "observations": ""
+      },
+      {
+        "country": pais,
+        "year": año,
+        "faceValue": "2 Euros",
+        "mint": "",
+        "conservation": "",
+        "description": "Rey Alberto II",
+        "commemorative": "conmemorativas",
         "uds": "0",
         "idNum": "80",
         "observations": ""

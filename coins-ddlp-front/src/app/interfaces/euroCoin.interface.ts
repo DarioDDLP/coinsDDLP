@@ -7,6 +7,7 @@ export interface EuroCoin {
     description: string;
     uds: string;
     conservation?: string;
+    commemorative?: string;
     idNum: string;
     observations?: string;
 }

@@ -37,6 +37,28 @@
             width: 98%;
         }
 
+        .card-table-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4rem;
+            padding: 0 0 0.75rem 0;
+
+            .switch-container {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+
+                span {
+                    font-size: 14px;
+                }
+            }
+
+            .p-dropdown-label {
+                font-size: 14px;
+            }
+        }
+
         .spinner-container {
             height: 70vh;
             display: flex;
