@@ -4,21 +4,20 @@
     <div class="flag-container">
       <img [src]="getNametoFlags(dataCoin.issuer.name)" alt="flag" />
     </div>
-
     <div class="title-container">
       <h1>{{ dataCoin.title.split("(")[0] }}</h1>
       <span>{{ dataCoin.title.split("(")[1].slice(0, -1) }}</span>
     </div>
-
     <div class="header-info-container">
+      @if (coin()?.conservation) {
       <div>
         <p-tag
-          [value]="coin()?.conservation ? coin()?.conservation : 'ND'"
-          [severity]="getConservationColors(coin()?.conservation ?? '-')"
+          [value]="coin()?.conservation"
+          [severity]="getConservationColors(coin()?.conservation)"
         ></p-tag>
       </div>
+      }
       <h2>{{ coin()?.year }}</h2>
-
       @if (coin() && coin()?.uds) {
       <p-badge
         [value]="coin()?.uds"
