@@ -41,9 +41,10 @@
       <tr>
         <th>País</th>
         <th>Año</th>
-        <th>Valor facial</th>
+        <th class="truncate-responsive">Valor facial</th>
         <th>Ceca</th>
         <th class="truncate">Descripción</th>
+        <th class="center truncate">Conservación</th>
         <th class="center">Uds.</th>
       </tr>
     </ng-template>
@@ -53,9 +54,17 @@
           <img [src]="getNametoFlags(euros.country)" alt="flag" width="32" />
         </td>
         <td>{{ euros.year }}</td>
-        <td>{{ euros.faceValue }}</td>
+        <td class="truncate-responsive">{{ euros.faceValue }}</td>
         <td class="truncate-responsive">{{ euros.mint }}</td>
         <td class="truncate">{{ euros.description }}</td>
+        <td class="center">
+          @if (euros.conservation) {
+          <p-tag
+            [value]="euros?.conservation"
+            [severity]="getConservationColors(euros?.conservation)"
+          ></p-tag>
+          }
+        </td>
         <td class="center">
           <p-badge
             [value]="euros.uds"

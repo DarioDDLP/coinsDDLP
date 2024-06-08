@@ -17,11 +17,13 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { OptionUds } from '../../interfaces/optionsUds.interface';
+import { getConservationColors } from '../../shared/config/conservation-states';
 @Component({
   selector: 'app-euros',
   standalone: true,
-  imports: [CommonModule, FormsModule, BadgeModule, ButtonModule, DropdownModule, IconFieldModule, InputIconModule, InputSwitchModule, InputTextModule, ProgressSpinnerModule, TableModule,],
+  imports: [CommonModule, FormsModule, BadgeModule, ButtonModule, DropdownModule, IconFieldModule, InputIconModule, InputSwitchModule, InputTextModule, ProgressSpinnerModule, TableModule, TagModule],
   templateUrl: './euros.component.html',
   styleUrl: './euros.component.scss'
 })
@@ -35,6 +37,7 @@ export default class EurosComponent {
   searchText = signal('');
   getNametoFlags = getNametoFlags;
   normalizeString = normalizeString;
+  getConservationColors = getConservationColors;
 
   isLoading = signal(false);
 
@@ -132,7 +135,7 @@ export default class EurosComponent {
         "country": pais,
         "year": año,
         "faceValue": "1 Céntimo",
-        "mint": "",
+        "mint": "A Torredonimeno",
         "conservation": "EBC",
         "description": "Rey Alberto II",
         "commemorative": "",
